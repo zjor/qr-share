@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <script src="qrcode.min.js"></script>
+  <script src="script.js"></script>
+</head>
+<body>
+  <h1>QR share</h1>
+  <form id="upload-form">
+    <input type="file" name="file">
+    <button type="submit" value="submit" disabled>Upload</button>
+  </form>
+  <div id="upload-result">
+  </div>
+  <div id="qr-code">
+  </div>
+  <script>
+    const form = document.querySelector('#upload-form');
+    const fileSelector = form.querySelector('input[type="file"]');
+    const submitButton = form.querySelector('button[type="submit"]');
+    const uploadResultDiv = document.querySelector('#upload-result');
+
+    let uploadParams = undefined;
+
+    fileSelector.addEventListener('change', async (_) => {
+      if (fileSelector.files && fileSelector.files.length > 0) {
+        const filename = fileSelector.files[0].name;
+        console.log('Getting perSigned upload URL...');
+        uploadParams = await getPreSignedUrl(filename);
+        console.log(uploadParams);
+        submitButton.disabled = false;
+      }
+    });
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData();
+      const { url, fields } = uploadParams;
+      Object.keys(fields).forEach(key => formData.append(key, fields[key]));
+      formData.append('file', fileSelector.files[0]);
+      const res = await fetch(url, {
+        method: 'POST',
+        body: formData,
+      });
+      console.log(res);
+      const href = `https://storage-abcd.s3.eu-central-1.amazonaws.com/${fileSelector.files[0].name}`;
+      uploadResultDiv.innerHTML = `
+      <h2>You download URL</h2>
+      <a href='${href}'>${href}</a>
+      `;
+      new QRCode(document.getElementById("qr-code"), href);
+    });
+  </script>
+</body>
+</html>
