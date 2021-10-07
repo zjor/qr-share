@@ -1,16 +1,14 @@
+import os
 import boto3
 import logging
 
 from botocore.exceptions import ClientError
 
-
-AWS_ACCESS_KEY = 'AKIAVXTQRN7WFPQ3PNBX'
-AWS_SECRET_KEY = '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'
-
-s3 = boto3.client(
+s3_client = boto3.client(
 	's3',
-	aws_access_key_id=AWS_ACCESS_KEY,
-	aws_secret_access_key=AWS_SECRET_KEY)
+	aws_access_key_id=os.getenv('S3_API_KEY'),
+	aws_secret_access_key=os.getenv('S3_SECRET'),
+    endpoint_url=os.getenv('S3_ENDPOINT'))
 
 
 def create_presigned_post(bucket_name, object_name,
@@ -28,8 +26,6 @@ def create_presigned_post(bucket_name, object_name,
     :return: None if error.
     """
 
-    # Generate a presigned S3 POST URL
-    s3_client = boto3.client('s3')
     try:
         response = s3_client.generate_presigned_post(bucket_name,
                                                      object_name,
