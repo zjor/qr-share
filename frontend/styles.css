@@ -34,3 +34,17 @@ html, body, div {
 #qr-code {
     padding-top: 3em;
 }
+
+#upload-result {
+    padding: 8px;
+}
+
+input {
+    padding: 16px;
+    min-width: 120px;    
+}
+
+button {
+    min-width: 120px;
+    padding:  8px;
+}
