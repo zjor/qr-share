@@ -1,0 +1,10 @@
+boto==2.49.0
+boto3==1.18.53
+botocore==1.21.53
+Flask==1.1.2
+Flask-Cors==3.0.10
+Flask-Mail==0.9.1
+Flask-RESTful==0.3.8
+flask-restplus==0.13.0
+flask-swagger==0.2.14
+flask-swagger-ui==3.25.0
