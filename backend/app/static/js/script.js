@@ -7,16 +7,20 @@ const qrCodeDiv = document.querySelector('#qr-code');
 
 const uploadHandler = {
     onProgress: (progress, total) => {
-        const percentage = (progress / total * 100).toFixed(2);
+        const percentage = (progress / total * 100).toFixed(0);
         log(`${percentage}%`);
-        progressDiv.innerText = `Progress: ${percentage}`;
+        progressDiv.innerText = `Progress: ${percentage}%`;
     },
-    onCompleted: () => {
-        log('done');
-        progressDiv.innerText = 'Done';
-        const url = `https://storage-abcd.s3.filebase.com/${fileInput.files[0].name}`;
-        downloadUrlDiv.innerHTML = `<a href="${url}">${url}</a>`;
-        new QRCode(qrCodeDiv, url);
+    onCompleted: (e) => {
+        log('done', e.target.responseText);
+        if (e.target.status === 200) {
+            progressDiv.innerText = 'Done';
+            const url = `https://storage-abcd.s3.filebase.com/${fileInput.files[0].name}`;
+            downloadUrlDiv.innerHTML = `<a href="${url}">${url}</a>`;
+            new QRCode(qrCodeDiv, url);
+        } else {
+            progressDiv.innerText = 'Upload has failed';
+        }
     }
 };
 
@@ -31,6 +35,9 @@ fileInput.addEventListener('change', (e) => {
         xhr.upload.onprogress = (e) => uploadHandler.onProgress(e.loaded, e.total);
 
         xhr.upload.onloadend = (e) => {
+        }
+
+        xhr.onload = (e) => {
             uploadHandler.onCompleted(e);
             resolve();
         }

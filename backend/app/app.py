@@ -3,7 +3,6 @@ import os
 
 import boto3
 from botocore.config import Config
-from botocore.exceptions import ClientError
 from flask import Flask, request, render_template, jsonify
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
@@ -40,13 +39,14 @@ def upload():
     filename = secure_filename(file.filename)
     full_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     file.save(full_path)
+    logging.info(f"Uploading file: {file.filename}; size: {file.content_length}")
 
     try:
         object_name = file.filename
         s3_client.upload_file(full_path, app.config['S3_BUCKET'], object_name)
-    except ClientError as e:
+    except Exception as e:
         logging.error(e)
-        return jsonify({'success': False, 'error': e}), 500
+        return jsonify({'success': False, 'error': e.__str__()}), 500
     finally:
         os.remove(full_path)
 
