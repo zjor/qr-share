@@ -1,0 +1,21 @@
+@import "variables";
+@import "reboot";
+
+@import "buttons";
+@import "form";
+@import "container";
+@import "uploader";
+
+body {
+  display: flex;
+  padding: ($spacer * 4) ($spacer * 6);
+  min-height: 100vh;
+
+  @include media-breakpoint-down('lg') {
+    padding: ($spacer * 2);
+  }
+
+  @include media-breakpoint-down('sm') {
+    padding: ($spacer * 2) $spacer;
+  }
+}
