@@ -1,0 +1,14 @@
+.idea
+.vscode
+node_modules
+__pycache__
+venv
+.env-*
+dist
+build
+*.log
+npm-debug.log*
+Thumbs.db
+Desktop.ini
+.DS_Store*
+ehthumbs.db

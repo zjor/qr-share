@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  labels:
+    app: {{ .Values.app }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.app }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.app }}
+    spec:
+      containers:
+        - name: {{ .Values.app }}
+          image: "{{ .Values.image }}:{{ .Values.version }}"
+          ports:
+            - containerPort: 5000
+          env:
+            - name: REGION
+              value: {{ .Values.s3.region }}
+            - name: S3_API_KEY
+              value: {{ .Values.s3.apiKey }}
+            - name: S3_SECRET
+              value: {{ .Values.s3.secret }}
+            - name: S3_ENDPOINT
+              value: {{ .Values.s3.endpoint }}

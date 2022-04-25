@@ -1,0 +1,20 @@
+# Default
+.idea
+.vscode
+
+# Node
+node_modules
+
+# Dist & tests
+dist
+build
+
+# Logs:
+*.log
+npm-debug.log*
+
+# Special
+Thumbs.db
+Desktop.ini
+.DS_Store*
+ehthumbs.db

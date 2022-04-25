@@ -1,0 +1,24 @@
+{
+  "short_name": "qr-share",
+  "name": "QR Share",
+  "icons": [
+    {
+      "src": "./images/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "./images/apple-touch-icon@192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./images/apple-touch-icon@512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "background_color": "#232526",
+  "theme_color": "#FFDE59",
+  "display": "standalone"
+}

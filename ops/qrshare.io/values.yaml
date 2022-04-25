@@ -1,0 +1,11 @@
+replicaCount: 1
+
+app: qrshare
+
+image: zjor/qr-share
+
+s3:
+  region: us-east-1
+  endpoint: https://s3.filebase.com
+  apiKey:
+  secret:
